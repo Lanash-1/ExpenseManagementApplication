@@ -65,4 +65,12 @@ public class ExpenseData implements ExpenseServices {
         st = con.createStatement();
         st.executeUpdate(query);
     }
+
+    @Override
+    public void editExpenseRecord(Expense expense) throws Exception {
+        query = "update Expense set Amount = "+expense.getAmount()+", AccountNumber = "+expense.getAccount().getAccountNumber()+", Category = '"+expense.getCategory()+"' where ExpenseID = "+expense.getExpenseId();
+        System.out.println(query);
+        st = con.createStatement();
+        st.executeUpdate(query);
+    }
 }

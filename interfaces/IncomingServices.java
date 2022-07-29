@@ -14,4 +14,6 @@ public interface IncomingServices {
     double getTotalIncoming(String userId) throws Exception;
 
     void deleteIncomingRecord(int incomingId) throws Exception;
+
+    void editIncomingRecord(Incoming incoming) throws Exception;
 }

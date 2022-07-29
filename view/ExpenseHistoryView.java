@@ -1,16 +1,12 @@
 package view;
 
+import controller.ExpenseController;
 import controller.ProfileController;
-import interfaces.PrintService;
 import model.Expense;
 import utility.ExpenseData;
-import utility.Helper;
 import utility.PrintData;
 import utility.Utility;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -20,6 +16,7 @@ public class ExpenseHistoryView{
 
     private ArrayList<Expense> expense;
     ExpenseData expenseData;
+    ExpenseController expenseController;
 
     public ExpenseHistoryView() throws Exception {
         expenseData = new ExpenseData();
@@ -106,22 +103,15 @@ public class ExpenseHistoryView{
                     }
                 }
             case EDIT:
+                expenseController = new ExpenseController();
+                expense = expenseData.getExpenseHistory(profile.getUserName());
+                expenseController.editExpense(expense, profile);
                 return 4;
             case DELETE:
+                expenseController = new ExpenseController();
                 expense = expenseData.getExpenseHistory(profile.getUserName());
-                int record;
-                Helper helper = new Helper();
-                while (true) {
-                    displayExpense(expense);
-                    record = getRecord();
-                    if (helper.checkValidRecord(record, expense.size())) {
-                        break;
-                    } else {
-                        System.out.println("Select a valid record");
-                    }
-                }
-                expenseData.deleteExpenseRecord(expense.get(record-1).getExpenseId());
-                System.out.println("\nRecord deleted successfully");
+                expenseController.deleteExpense(expense);
+                expense = expenseData.getExpenseHistory(profile.getUserName());
                 return viewExpense(expenseData.getExpenseHistory((profile.getUserName())), profile);
             case BACK:
                 return 6;
@@ -131,14 +121,4 @@ public class ExpenseHistoryView{
         return 0;
     }
 
-    public int getRecord(){
-        System.out.print("Select a record to delete: ");
-        try{
-            String input = sc.nextLine();
-            return Integer.parseInt(input);
-        }catch (Exception error){
-            System.out.println("Enter a valid option.");
-        }
-        return 0;
-    }
 }

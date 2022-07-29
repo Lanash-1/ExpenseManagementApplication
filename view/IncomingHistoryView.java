@@ -2,16 +2,11 @@ package view;
 
 import controller.IncomingController;
 import controller.ProfileController;
-import interfaces.PrintService;
 import model.Incoming;
-import utility.Helper;
 import utility.IncomingData;
 import utility.PrintData;
 import utility.Utility;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -21,6 +16,8 @@ public class IncomingHistoryView {
     private ArrayList<Incoming> incoming;
 
     IncomingData incomingData;
+
+    IncomingController incomingController;
 
     public IncomingHistoryView() throws Exception {
         incomingData = new IncomingData();
@@ -86,24 +83,14 @@ public class IncomingHistoryView {
                     }
                 }
             case EDIT:
-                IncomingController incomingController = new IncomingController();
+                incomingController = new IncomingController();
+                incoming = incomingData.getIncomingHistory(profile.getUserName());
                 incomingController.editIncoming(incoming, profile);
                 return 3;
             case DELETE:
+                incomingController = new IncomingController();
                 incoming = incomingData.getIncomingHistory(profile.getUserName());
-                int record;
-                Helper helper = new Helper();
-                while (true) {
-                    displayIncoming(incoming);
-                    record = getRecord();
-                    if (helper.checkValidRecord(record, incoming.size())) {
-                        break;
-                    } else {
-                        System.out.println("Select a valid record");
-                    }
-                }
-                incomingData.deleteIncomingRecord(incoming.get(record - 1).getIncomingId());
-                System.out.println("\nRecord deleted successfully");
+                incomingController.deleteIncoming(incoming);
                 incoming = incomingData.getIncomingHistory(profile.getUserName());
                 if (incoming.size() == 0) {
                     displayIncoming(incoming);
@@ -118,14 +105,4 @@ public class IncomingHistoryView {
         return 0;
     }
 
-    public int getRecord(){
-        System.out.print("Select a record to delete: ");
-        try{
-            String input = sc.nextLine();
-            return Integer.parseInt(input);
-        }catch (Exception error){
-            System.out.println("Enter a valid option.");
-        }
-        return 0;
-    }
 }

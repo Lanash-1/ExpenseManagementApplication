@@ -2,9 +2,9 @@ package view;
 
 import java.util.Scanner;
 
-public class EditIncomingView {
-    Scanner sc = new Scanner(System.in);
+public class EditExpenseView {
 
+    Scanner sc = new Scanner(System.in);
     public int getRecord() {
         while(true){
             System.out.print("Select a record to edit: ");
@@ -31,6 +31,7 @@ public class EditIncomingView {
         }
     }
 
+
     public int getAccount() {
         while(true){
             System.out.print("Select Account: ");
@@ -45,9 +46,5 @@ public class EditIncomingView {
 
     public void displayStatus() {
         System.out.println("Record edited successfully");
-    }
-
-    public void displayError() {
-        System.out.println("Select from available record");
     }
 }

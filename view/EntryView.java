@@ -5,7 +5,6 @@ import enums.Entry;
 import java.util.Scanner;
 
 public class EntryView {
-
     Scanner sc = new Scanner(System.in);
     public void entryView() {
         while (true) {

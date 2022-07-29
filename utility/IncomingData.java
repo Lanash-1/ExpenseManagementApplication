@@ -66,4 +66,9 @@ public class IncomingData implements IncomingServices {
     }
 
 
+    public void editIncomingRecord(Incoming incoming) throws Exception {
+        query = "update Incoming set Amount = "+incoming.getAmount()+", AccountNumber = "+incoming.getAccount().getAccountNumber()+" where IncomingID = "+incoming.getIncomingId();
+        st = con.createStatement();
+        st.executeUpdate(query);
+    }
 }

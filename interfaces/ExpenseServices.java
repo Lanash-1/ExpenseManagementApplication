@@ -14,4 +14,6 @@ public interface ExpenseServices {
     double getTotalExpense(String userId) throws Exception;
 
     void deleteExpenseRecord(int expenseId) throws Exception;
+
+    void editExpenseRecord(Expense expense) throws Exception;
 }

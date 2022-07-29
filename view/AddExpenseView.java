@@ -10,6 +10,7 @@ public class AddExpenseView {
             System.out.print("Enter amount: ");
             try {
                 double amount = sc.nextDouble();
+                sc.nextLine();
                 if(amount > 0){
                     return amount;
                 }else{
@@ -40,7 +41,7 @@ public class AddExpenseView {
     }
 
     public String getCategory() {
-        sc.nextLine();
+//        sc.nextLine();
         String[] category ={"GADGET", "ENTERTAINMENT", "FOOD", "TRAVEL", "HEALTH", "CUSTOM"};
         while(true) {
             for (int i=0; i<category.length ; i++) {
