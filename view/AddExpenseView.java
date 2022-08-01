@@ -1,5 +1,7 @@
 package view;
 
+import utility.Helper;
+
 import java.util.Scanner;
 
 public class AddExpenseView {
@@ -41,7 +43,6 @@ public class AddExpenseView {
     }
 
     public String getCategory() {
-//        sc.nextLine();
         String[] category ={"GADGET", "ENTERTAINMENT", "FOOD", "TRAVEL", "HEALTH", "CUSTOM"};
         while(true) {
             for (int i=0; i<category.length ; i++) {
@@ -53,8 +54,15 @@ public class AddExpenseView {
                 sc.nextLine();
                 if(choice >0 && choice < 7){
                     if(choice == 6){
-                        System.out.print("Enter your category: ");
-                        return sc.nextLine();
+                        Helper helper = new Helper();
+                        String input;
+                        while(true) {
+                            System.out.print("Enter your category: ");
+                            input = sc.nextLine();
+                            if(helper.fieldValidation(input)){
+                                return input;
+                            }
+                        }
                     }else{
                         return category[choice-1];
                     }
