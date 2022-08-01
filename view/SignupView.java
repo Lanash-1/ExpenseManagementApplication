@@ -14,8 +14,6 @@ public class SignupView {
     public void signup() throws Exception {
         Helper helper = new Helper();
         Utility util = new Utility();
-        UserData userData = new UserData();
-        BankAccountData bankAccountData = new BankAccountData();
         String email;
         String password;
         String firstName;
@@ -59,10 +57,13 @@ public class SignupView {
             lastName = getLastName();
         } while (!helper.fieldValidation(lastName));
 
+        UserData userData = new UserData();
+
         userData.createAccount(userName, firstName, lastName, email, password);
         System.out.println("----------------------------------------\nAccount created Successfully.\n----------------------------------------");
         ProfileController profile = new ProfileController();
         profile.getUserDetails(email);
+        BankAccountData bankAccountData = new BankAccountData();
         profile.setAccounts(bankAccountData.getBankDetails(profile.getUserName()));
         DashboardView dashboard = new DashboardView();
         dashboard.viewDashboard(profile);

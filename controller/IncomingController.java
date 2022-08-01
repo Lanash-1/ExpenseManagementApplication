@@ -10,13 +10,13 @@ import java.util.ArrayList;
 
 public class IncomingController {
 
-    private IncomingHistoryView incomingHistoryView;
-    private AddIncomingView addIncomingView;
-    private EditIncomingView editIncomingView;
+    private final IncomingHistoryView incomingHistoryView;
+    private final AddIncomingView addIncomingView;
+    private final EditIncomingView editIncomingView;
 
-    private Incoming incoming;
+    private final Incoming incoming;
 
-    private IncomingData incomingData;
+    private final IncomingData incomingData;
 
 
     public IncomingController() throws Exception {

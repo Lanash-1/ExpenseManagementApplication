@@ -4,22 +4,21 @@ import model.Expense;
 import model.LinkedAccount;
 import utility.ExpenseData;
 import utility.Helper;
-import utility.Utility;
 import view.*;
 
 import java.util.ArrayList;
 
 public class ExpenseController {
 
-    private AddExpenseView addExpenseView;
+    private final AddExpenseView addExpenseView;
 
-    private ExpenseHistoryView expenseHistoryView;
+    private final ExpenseHistoryView expenseHistoryView;
 
-    private Expense expense;
+    private final Expense expense;
 
-    private ExpenseData expenseData;
+    private final ExpenseData expenseData;
 
-    private EditExpenseView editExpenseView;
+    private final EditExpenseView editExpenseView;
 
     public ExpenseController() throws Exception {
         addExpenseView = new AddExpenseView();

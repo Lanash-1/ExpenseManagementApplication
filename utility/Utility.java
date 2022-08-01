@@ -4,9 +4,11 @@ import model.Expense;
 import model.Incoming;
 import model.LinkedAccount;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
-
 
 public class Utility{
 

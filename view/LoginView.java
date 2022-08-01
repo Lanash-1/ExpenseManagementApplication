@@ -9,14 +9,6 @@ import java.util.Scanner;
 public class LoginView {
 
     Scanner sc = new Scanner(System.in);
-    Utility util;
-    BankAccountData bankAccountData;
-
-
-    public LoginView() throws Exception {
-        util = new Utility();
-        bankAccountData = new BankAccountData();
-    }
 
     public void login() throws Exception {
         boolean isValidated;
@@ -27,6 +19,7 @@ public class LoginView {
         if(isValidated) {
             ProfileController profile = new ProfileController();
             profile.getUserDetails(input);
+            BankAccountData bankAccountData = new BankAccountData();
             profile.setAccounts(bankAccountData.getBankDetails(profile.getUserName()));
             DashboardView dashboard = new DashboardView();
             dashboard.viewDashboard(profile);
@@ -44,6 +37,7 @@ public class LoginView {
     }
 
     public boolean validation(String email, String password) throws Exception {
+        Utility util = new Utility();
         if (util.loginValidation(email, password)) {
             System.out.println("Logged in successfully");
             return true;
