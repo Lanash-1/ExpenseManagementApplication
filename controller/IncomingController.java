@@ -13,28 +13,26 @@ public class IncomingController {
     private final IncomingHistoryView incomingHistoryView;
     private final AddIncomingView addIncomingView;
     private final EditIncomingView editIncomingView;
-
     private final Incoming incoming;
-
     private final IncomingData incomingData;
-
-
+    private final Helper helper;
     public IncomingController() throws Exception {
         incomingHistoryView = new IncomingHistoryView();
         addIncomingView = new AddIncomingView();
         incoming = new Incoming();
         editIncomingView = new EditIncomingView();
         incomingData = new IncomingData();
+        helper = new Helper();
     }
 
     public void addIncoming(ProfileController profile) throws Exception {
         if(profile.getAccounts().size() > 0){
             LinkedAccountsView linkedAccountsView = new LinkedAccountsView();
             linkedAccountsView.viewBankAccounts(profile.getAccounts());
-            int index = addIncomingView.getAccount();
+            int index = helper.getAccount();
             if(profile.getAccounts().size() >= index){
                 incoming.setAccount(profile.getAccounts().get(index-1));
-                incoming.setAmount(addIncomingView.getAmount());
+                incoming.setAmount(helper.getAmount());
                 incomingData.addIncoming(incoming, profile);
                 addIncomingView.addIncomingStatus();
             }else{
@@ -55,17 +53,16 @@ public class IncomingController {
     public void editIncoming(ArrayList<Incoming> incomingList, ProfileController profile) throws Exception {
         while(true){
             incomingHistoryView.displayIncoming(incomingList);
-            int recordToBeEdited = editIncomingView.getRecord();
+            int recordToBeEdited = helper.getRecord();
             if(incomingList.size() >= recordToBeEdited && recordToBeEdited != 0){
                 double amount = 0;
                 while(amount <= 0){
-                    amount = editIncomingView.getAmount();
+                    amount = helper.getAmount();
                 }
                 LinkedAccountsView linkedAccountsView = new LinkedAccountsView();
                 linkedAccountsView.viewBankAccounts(profile.getAccounts());
                 int index;
-                Helper helper = new Helper();
-                do index = editIncomingView.getAccount(); while(!helper.checkValidRecord(index, incomingList.size()));
+                do index = helper.getAccount(); while(!helper.checkValidRecord(index, incomingList.size()));
                 LinkedAccount account = new LinkedAccount();
                 account.setAccountNumber(profile.getAccounts().get(index-1).getAccountNumber());
                 account.setBankName(profile.getAccounts().get(index-1).getBankName());
@@ -82,11 +79,10 @@ public class IncomingController {
     }
 
     public void deleteIncoming(ArrayList<Incoming> incomingList) throws Exception {
-        Helper helper = new Helper();
         DeleteIncomingView deleteIncomingView = new DeleteIncomingView();
         while(true){
             incomingHistoryView.displayIncoming(incomingList);
-            int recordToBeDeleted = deleteIncomingView.getRecord();
+            int recordToBeDeleted = helper.getRecord();
             if(helper.checkValidRecord(recordToBeDeleted, incomingList.size())){
                 incomingData.deleteIncomingRecord(incomingList.get(recordToBeDeleted-1).getIncomingId());
                 deleteIncomingView.deleteStatus();

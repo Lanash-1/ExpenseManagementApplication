@@ -35,7 +35,6 @@ public class LinkedAccountsView {
                 }else{
                     System.out.println("Enter proper input.");
                 }
-
             }catch(Exception error){
                 System.out.println("Enter a valid option(Linked Account view)");
                 sc.nextLine();

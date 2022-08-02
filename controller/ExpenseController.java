@@ -11,14 +11,11 @@ import java.util.ArrayList;
 public class ExpenseController {
 
     private final AddExpenseView addExpenseView;
-
     private final ExpenseHistoryView expenseHistoryView;
-
     private final Expense expense;
-
     private final ExpenseData expenseData;
-
     private final EditExpenseView editExpenseView;
+    private final Helper helper;
 
     public ExpenseController() throws Exception {
         addExpenseView = new AddExpenseView();
@@ -26,6 +23,7 @@ public class ExpenseController {
         expense = new Expense();
         expenseData = new ExpenseData();
         editExpenseView = new EditExpenseView();
+        helper = new Helper();
     }
 
     public void viewExpenseHistory(ProfileController profile) throws Exception {
@@ -39,11 +37,11 @@ public class ExpenseController {
         if(profile.getAccounts().size() > 0){
             LinkedAccountsView linkedAccountsView = new LinkedAccountsView();
             linkedAccountsView.viewBankAccounts(profile.getAccounts());
-            int index = addExpenseView.getAccount();
+            int index = helper.getAccount();
             if(profile.getAccounts().size() >= index && index != 0){
                 expense.setAccount(profile.getAccounts().get(index-1));
-                expense.setAmount(addExpenseView.getAmount());
-                expense.setCategory(addExpenseView.getCategory());
+                expense.setAmount(helper.getAmount());
+                expense.setCategory(helper.getCategory());
                 expenseData.addExpense(expense, profile);
                 addExpenseView.addExpenseStatus();
             }else{
@@ -57,23 +55,19 @@ public class ExpenseController {
     public void editExpense(ArrayList<Expense> expenseList, ProfileController profile) throws Exception {
         while(true){
             expenseHistoryView.displayExpense(expenseList);
-            int recordToBeEdited = editExpenseView.getRecord();
+            int recordToBeEdited = helper.getRecord();
             if(expenseList.size() >= recordToBeEdited && recordToBeEdited != 0){
-                double amount = 0;
-                while(amount <= 0){
-                    amount = editExpenseView.getAmount();
-                }
+                double amount = helper.getAmount();
                 LinkedAccountsView linkedAccountsView = new LinkedAccountsView();
                 linkedAccountsView.viewBankAccounts(profile.getAccounts());
                 int index;
-                Helper helper = new Helper();
-                do index = editExpenseView.getAccount(); while(!helper.checkValidRecord(index, expenseList.size()));
+                do index = helper.getAccount(); while(!helper.checkValidRecord(index, expenseList.size()));
                 LinkedAccount account = new LinkedAccount();
                 account.setAccountNumber(profile.getAccounts().get(index-1).getAccountNumber());
                 account.setBankName(profile.getAccounts().get(index-1).getBankName());
                 expense.setAccount(account);
                 expense.setAmount(amount);
-                expense.setCategory(addExpenseView.getCategory());
+                expense.setCategory(helper.getCategory());
                 expense.setExpenseId(expenseList.get(recordToBeEdited-1).getExpenseId());
                 expenseData.editExpenseRecord(expense);
                 editExpenseView.displayStatus();
@@ -87,7 +81,7 @@ public class ExpenseController {
         DeleteExpenseView deleteExpenseView = new DeleteExpenseView();
         while(true){
             expenseHistoryView.displayExpense(expenseList);
-            int recordToBeDeleted = deleteExpenseView.getRecord();
+            int recordToBeDeleted = helper.getRecord();
             if(helper.checkValidRecord(recordToBeDeleted, expenseList.size())){
                 expenseData.deleteExpenseRecord(expenseList.get(recordToBeDeleted-1).getExpenseId());
                 deleteExpenseView.deleteStatus();
